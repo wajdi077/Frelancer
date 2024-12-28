@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  title: "My API"
+  description: "Documentation de l'API pour l'application"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8080"
+    description: "Serveur local"
+paths:
+  /employees:
+    get:
+      summary: "Récupérer la liste des employés"
+      description: "Retourne tous les employés enregistrés dans le système"
+      operationId: "getEmployees"
+      tags:
+        - "Employees"
+      responses:
+        '200':
+          description: "Liste des employés récupérée avec succès"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+        '500':
+          description: "Erreur interne du serveur"
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        nom:
+          type: string
+          description: "Nom de l'employé"
+        prenom:
+          type: string
+          description: "Prénom de l'employé"
+        age:
+          type: integer
+          format: int32
+          description: "Âge de l'employé"
+      required:
+        - nom
+        - prenom
+        - age

@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: database/db.changelog-master.yaml  # Appel au fichier de changement pour l'insertion
+  - include:
+      file: database/db.changelog-insertion.yaml  # Appel au fichier de changement pour la création de la table
+  - include:
+      file: database/db.changelog-modification.yaml  # Appel au fichier de changement pour la création de la table

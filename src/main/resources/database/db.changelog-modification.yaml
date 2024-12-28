@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: wajdi
+      changes:
+        - sql:
+            dbms: mysql
+            splitStatements: true
+            sql: |
+              -- Delete all employees first
+              DELETE FROM employe;
+
+              -- Insert new employees with the role MANAGER
+              INSERT INTO employe (employeID, nom, prenom, age, role)
+              VALUES (UUID(), 'John', 'Doe', 30, 'MANAGER');
+              
+              INSERT INTO employe (employeID, nom, prenom, age, role)
+              VALUES (UUID(), 'Jane', 'Smith', 25, 'MANAGER');

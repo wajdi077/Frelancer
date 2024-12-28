@@ -1,0 +1,73 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.project'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+	implementation 'org.liquibase:liquibase-core'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'mysql:mysql-connector-java:8.0.29'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'com.h2database:h2:2.1.214'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+// Define profiles
+ext {
+	profiles = project.hasProperty('profiles') ? project.property('profiles') : 'default'
+}
+
+// Task to enable or disable Liquibase based on profile
+task enableLiquibase {
+	doLast {
+		if (profiles == 'dev') {
+			println 'Liquibase is enabled for Docker.'
+			// Liquibase should be enabled
+			project.ext.set('LIQUIBASE_ENABLED', 'true')
+		} else {
+			println 'Liquibase is skipped for non-Docker profile.'
+			// Liquibase should be disabled
+			project.ext.set('LIQUIBASE_ENABLED', 'false')
+		}
+	}
+}
+
+build.dependsOn enableLiquibase
+
+task buildApp {
+	dependsOn 'build'
+}
+
+// Pass environment variables for profiles
+tasks.withType(JavaExec) {
+	environment 'ACTIVE_PROFILE', profiles
+}

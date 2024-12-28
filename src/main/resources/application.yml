@@ -1,0 +1,95 @@
+spring:
+  application:
+    name: wma
+
+  profiles:
+    active: test # Default profile to be used (can be overridden)
+
+  # Common settings across all profiles
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+  logging:
+    level:
+      liquibase: DEBUG
+
+# Profile-specific configurations
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    hikari:
+      pool-name: HikariCP
+    url: jdbc:mysql://db:3306/mydb
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  liquibase:
+    change-log: classpath:database/databaseChangeLog.yaml
+    enabled: ${LIQUIBASE_ENABLED:true}  # Liquibase enabled when the LIQUIBASE_ENABLED is true
+
+  springdoc:
+    api-docs:
+      path: /open-api/openapi.yaml
+      enabled: true
+    swagger-ui:
+      path: /open-api/ui
+      disable-swagger-default-url: true
+      url: /open-api/openapi.yaml
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    hikari:
+      pool-name: HikariCP
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  liquibase:
+    enabled: false  # Liquibase disabled for test profile
+
+  springdoc:
+    api-docs:
+      path: /open-api/openapi.yaml
+      enabled: false
+    swagger-ui:
+      path: /open-api/ui
+      disable-swagger-default-url: true
+      url: /open-api/openapi.yaml
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    hikari:
+      pool-name: HikariCP
+    url: jdbc:mysql://db:3306/mydb
+    username: prod_user
+    password: prod_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  liquibase:
+    change-log: classpath:database/databaseChangeLog.yaml
+    enabled: false  # Liquibase disabled for prod profile
+
+  springdoc:
+    api-docs:
+      path: /open-api/openapi.yaml
+      enabled: true
+    swagger-ui:
+      path: /open-api/ui
+      disable-swagger-default-url: true
+      url: /open-api/openapi.yaml
