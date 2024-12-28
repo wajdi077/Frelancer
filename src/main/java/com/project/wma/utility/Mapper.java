@@ -6,7 +6,7 @@ import com.project.wma.domain.Employee;
 public class Mapper {
 
     public static EmployeResponse convertToEnity(Employee emp) {
-        EmployeResponse response = null;
+        EmployeResponse response = new EmployeResponse();
         if (emp != null) {
             response.setNom(emp.getNom());
             response.setPrenom(emp.getPrenom());
