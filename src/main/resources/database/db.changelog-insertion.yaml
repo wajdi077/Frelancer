@@ -8,6 +8,6 @@ databaseChangeLog:
             splitStatements: true
             sql: |
               INSERT INTO employe (employeID, nom, prenom, age, role)
-              VALUES (UUID(), 'John', 'Doe', 30, 'ADMIN');
+              VALUES (UUID(), 'John', 'Doe', 30, 'MANAGER');
               INSERT INTO employe (employeID, nom, prenom, age, role)
-              VALUES (UUID(), 'Jane', 'Smith', 25, 'USER');
+              VALUES (UUID(), 'Jane', 'Smith', 25, 'MANAGER');
