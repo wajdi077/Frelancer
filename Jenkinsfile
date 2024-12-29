@@ -5,13 +5,19 @@ pipeline {
         DOCKER_IMAGE = 'wma2025wma/wma-app:latest'
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         MYSQL_IMAGE = 'mysql:8.0'
-        MYSQL_CONTAINER_NAME = 'my-mysql-container'
+        MYSQL_CONTAINER_NAME = 'db'
     }
 
     stages {
         stage('Clone Repository') {
             steps {
                 git branch: 'master', credentialsId: 'git-hub-credentials', url: 'https://github.com/wajdi077/Frelancer.git'
+            }
+        }
+
+        stage('Make Gradle Wrapper Executable') {
+            steps {
+                sh 'chmod +x ./gradlew'
             }
         }
 
@@ -33,6 +39,7 @@ pipeline {
             }
         }
 
+        /*
         stage('Push Docker Image') {
             steps {
                 script {
@@ -42,6 +49,7 @@ pipeline {
                 }
             }
         }
+        */
 
         stage('Run MySQL Container') {
             steps {
