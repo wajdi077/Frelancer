@@ -5,9 +5,7 @@ import com.project.wma.domain.Employee;
 import com.project.wma.repository.EmployeRepo;
 import com.project.wma.utility.Mapper;
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +23,7 @@ public class EmployeServiceImpl implements EmployeService {
     private final EmployeRepo employeRepo;
 
     @Override
+    @Caching(value = "employees")
     public EmployeResponse addEmploye(Employee emp) {
         var saved = employeRepo.save(emp);
         return Mapper.convertToEnity(saved);

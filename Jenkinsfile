@@ -69,10 +69,10 @@ pipeline {
             steps {
                 script {
                     // Stop and remove the previous application container if it's running
-                    sh "docker stop my-container || true && docker rm my-container || true"
+                    sh "docker stop db || true && docker rm db || true"
 
                     // Run the new application container
-                    sh "docker run -d --name my-container -p 8080:8080 --link ${MYSQL_CONTAINER_NAME}:mysql ${DOCKER_IMAGE}"
+                    sh "docker run -d --name db -p 8080:8080 --link ${MYSQL_CONTAINER_NAME}:mysql ${DOCKER_IMAGE}"
                 }
             }
         }
