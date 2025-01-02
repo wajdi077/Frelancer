@@ -3,14 +3,21 @@ package com.project.wma.service;
 
 import com.project.wma.Response.EmployeResponse;
 import com.project.wma.domain.Employee;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-@Service
 public interface EmployeService {
 
     EmployeResponse addEmploye(Employee emp);
 
     List<EmployeResponse> findAllEmployes();
+
+    void displayTasks(UUID id);
+
+    default Optional<Object> deleteAlltasks(){
+        return Optional.empty();
+    }
+
 }

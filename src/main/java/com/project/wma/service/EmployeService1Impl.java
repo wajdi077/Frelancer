@@ -9,32 +9,26 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 @Service
 @Validated
 @Transactional
 @AllArgsConstructor
-public class EmployeServiceMock implements EmployeService{
+public class EmployeService1Impl implements EmployeService{
     @Override
     public EmployeResponse addEmploye(Employee emp) {
-        return EmployeResponse.builder()
-                .nom("wajdi")
-                .prenom("mathlouthi")
-                .age(31).build();
+        return null;
     }
 
     @Override
     public List<EmployeResponse> findAllEmployes() {
-        return Stream.iterate(0, n -> n + 1)
-                .limit(10)
-                .map(n -> new EmployeResponse("John", "Doe", 31))
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
     public void displayTasks(UUID id) {
 
     }
+
 }
